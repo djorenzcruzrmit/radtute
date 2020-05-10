@@ -28,11 +28,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id]) 
-    if @user.update_attributes(user_params)
-      # Handle a successful update.
-    else
-      render 'edit' 
-    end
   end
 
   def update
@@ -52,10 +47,6 @@ class UsersController < ApplicationController
     end
 
   private
-    
-    def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
 
     def logged_in_user
       unless logged_in?
@@ -63,6 +54,10 @@ class UsersController < ApplicationController
         flash[:danger] = "Please log in."
         redirect_to login_url
       end
+    end
+
+    def user_params
+      params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 
     def correct_user
